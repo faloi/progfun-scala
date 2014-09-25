@@ -15,12 +15,10 @@ object Main extends App {
   /**
    * Exercise 1
    */
-  def pascal(c: Int, r: Int): Int = {
-    (c, r) match {
-      case (x, y) if x == y => 1
+  def pascal: PartialFunction[(Int, Int), Int] = {
+      case (col, row) if col == row => 1
       case (0, _) => 1
-      case (x, y) => pascal(x - 1, y - 1) + pascal(x, y -1)
-    }
+      case (col, row) => pascal(col - 1, row - 1) + pascal(col, row -1)
   }
 
   /**
@@ -28,25 +26,33 @@ object Main extends App {
    */
   def balance(chars: List[Char]): Boolean = {
     @tailrec
-    def loop(count: Int, chars: List[Char]): Boolean = {
-      if (count < 0)
-        false
-      else
-        chars match {
-          case Nil => true
-          case c :: cs => c match {
-            case '(' => loop(count + 1, cs)
-            case ')' => loop(count - 1, cs)
-            case _ => loop(count, cs)
+    def isBalanced(openedParenthesis: Int, chars: List[Char]): Boolean =
+      openedParenthesis match {
+        case x if x < 0 => false
+        case x =>
+          chars match {
+            case Nil => true
+            case c :: cs => c match {
+              case '(' => isBalanced(x + 1, cs)
+              case ')' => isBalanced(x - 1, cs)
+              case _ => isBalanced(x, cs)
+            }
           }
-        }
-    }
+      }
 
-    loop(0, chars)
+    isBalanced(0, chars)
   }
 
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange: PartialFunction[(Int, List[Int]), Int] = {
+    case (0, _) => 1
+    case (money, Nil) => 0
+    case (money, coins @ c :: cs) =>
+      val changeWithRemainingCoins = countChange(money, cs)
+
+      if (c <= money) changeWithRemainingCoins + countChange(money - c, coins)
+      else changeWithRemainingCoins
+  }
 }
