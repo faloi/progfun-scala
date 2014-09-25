@@ -31,7 +31,7 @@ object Main extends App {
         case x if x < 0 => false
         case x =>
           chars match {
-            case Nil => true
+            case Nil => x == 0
             case c :: cs => c match {
               case '(' => isBalanced(x + 1, cs)
               case ')' => isBalanced(x - 1, cs)
