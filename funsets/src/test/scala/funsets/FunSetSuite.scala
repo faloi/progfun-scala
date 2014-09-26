@@ -91,4 +91,13 @@ class FunSetSuite extends FunSuite {
       assert(!exists(s, (x) => x >= 3), "in {1,2} doesn't exist an element that satisfies x >= 3")
     }
   }
+
+  test("map creates a set transformed by applying the function to each element of the original set") {
+    new TestSets {
+      val s = map(union(s1, s2), (x) => x * 3)
+      assert(contains(s, 3))
+      assert(contains(s, 6))
+      assert(!contains(s, 1))
+    }
+  }
 }
