@@ -58,4 +58,12 @@ class FunSetSuite extends FunSuite {
       assert(contains(s, 1))
     }
   }
+
+  test("diff contains the elements of the first set that are not on the second one") {
+    new TestSets {
+      val s = diff(union(s1, s2), s2)
+      assert(contains(s, 1))
+      assert(!contains(s, 2))
+    }
+  }
 }
