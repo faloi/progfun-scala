@@ -66,4 +66,12 @@ class FunSetSuite extends FunSuite {
       assert(!contains(s, 2))
     }
   }
+
+  test("filter returns the subset of the given set for which the predicate holds") {
+    new TestSets {
+      val s = filter(union(s1, s2), (x) => x > 1)
+      assert(!contains(s, 1))
+      assert(contains(s, 2))
+    }
+  }
 }
