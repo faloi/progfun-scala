@@ -83,4 +83,12 @@ class FunSetSuite extends FunSuite {
       assert(!forall(s, (x) => x < 2))
     }
   }
+
+  test("exists checks whether any bounded integer within the set satisfies the predicate") {
+    new TestSets {
+      val s = union(s1, s2)
+      assert(exists(s, (x) => x >= 2), "in {1,2} exists an element that satisfies x >= 2")
+      assert(!exists(s, (x) => x >= 3), "in {1,2} doesn't exist an element that satisfies x >= 3")
+    }
+  }
 }
