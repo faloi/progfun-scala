@@ -43,4 +43,19 @@ class FunSetSuite extends FunSuite {
       assert(!contains(s, 3), "Union 3")
     }
   }
+
+  test("intersection doesn't contain elements that aren't on both sets") {
+    new TestSets {
+      val intersection1and2 = intersect(s1, s2)
+      assert(!contains(intersection1and2, 1))
+      assert(!contains(intersection1and2, 2))
+    }
+  }
+
+  test("intersection contains the elements on both sets") {
+    new TestSets {
+      val s = intersect(s1, singletonSet(1))
+      assert(contains(s, 1))
+    }
+  }
 }
