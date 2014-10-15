@@ -150,9 +150,9 @@ class Empty extends TweetSet {
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
-    val rightFilter = right.filter(p)
-    if (p(elem)) left.filterAcc(p, rightFilter.incl(elem))
-    else left.filterAcc(p, rightFilter)
+    val rest = left.filterAcc(p, right.filterAcc(p, acc))
+    if (p(elem)) rest.incl(elem)
+    else rest
   }
 
   /**
@@ -188,7 +188,7 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
    * and be implemented in the subclasses?
    */
   override def union(that: TweetSet): TweetSet =
-    that.union(left).union(right).incl(elem)
+    right.union(left.union(that.incl(elem)))
 
   override def mostRetweetedOption: Option[Tweet] = {
     val mostRtLeft = left.mostRetweetedOption
@@ -241,14 +241,18 @@ object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-  lazy val googleTweets: TweetSet = ???
-  lazy val appleTweets: TweetSet = ???
+  def filterByTags(tags: List[String]): TweetSet =
+    TweetReader.allTweets.filter(tweet => tags.exists(tweet.text.contains(_)))
+
+  lazy val googleTweets: TweetSet = filterByTags(google)
+  lazy val appleTweets: TweetSet = filterByTags(apple)
 
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
-  lazy val trending: TweetList = ???
+  lazy val trending: TweetList =
+    googleTweets.union(appleTweets).descendingByRetweet
 }
 
 object Main extends App {
