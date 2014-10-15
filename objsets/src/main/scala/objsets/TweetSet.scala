@@ -63,7 +63,12 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def mostRetweeted: Tweet = ???
+  def mostRetweeted: Tweet = mostRetweetedOption match {
+    case Some(t) => t
+    case None => throw new NoSuchElementException
+  }
+
+  def mostRetweetedOption: Option[Tweet]
 
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
@@ -128,6 +133,8 @@ class Empty extends TweetSet {
    * and be implemented in the subclasses?
    */
   override def union(that: TweetSet): TweetSet = that
+
+  override def mostRetweetedOption: Option[Tweet] = None
 }
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
@@ -172,6 +179,17 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
    */
   override def union(that: TweetSet): TweetSet =
     that.union(left).union(right).incl(elem)
+
+  override def mostRetweetedOption: Option[Tweet] = {
+    val mostRtLeft = left.mostRetweetedOption
+    val mostRtRight = right.mostRetweetedOption
+    def isElemBiggerThan(maybeTweet: Option[Tweet]) = maybeTweet.forall(elem.retweets > _.retweets)
+
+    if (isElemBiggerThan(mostRtLeft) && isElemBiggerThan(mostRtRight)) Some(elem)
+    else if (isElemBiggerThan(mostRtLeft)) mostRtRight
+    else mostRtLeft
+  }
+
 }
 
 trait TweetList {
