@@ -79,8 +79,7 @@ abstract class TweetSet {
    * Question: Should we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def descendingByRetweet: TweetList = ???
-
+  def descendingByRetweet: TweetList
 
   /**
    * The following methods are already implemented
@@ -135,6 +134,17 @@ class Empty extends TweetSet {
   override def union(that: TweetSet): TweetSet = that
 
   override def mostRetweetedOption: Option[Tweet] = None
+
+  /**
+   * Returns a list containing all tweets of this set, sorted by retweet count
+   * in descending order. In other words, the head of the resulting list should
+   * have the highest retweet count.
+   *
+   * Hint: the method `remove` on TweetSet will be very useful.
+   * Question: Should we implment this method here, or should it remain abstract
+   * and be implemented in the subclasses?
+   */
+  override def descendingByRetweet: TweetList = Nil
 }
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
@@ -190,6 +200,19 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     else mostRtLeft
   }
 
+  /**
+   * Returns a list containing all tweets of this set, sorted by retweet count
+   * in descending order. In other words, the head of the resulting list should
+   * have the highest retweet count.
+   *
+   * Hint: the method `remove` on TweetSet will be very useful.
+   * Question: Should we implment this method here, or should it remain abstract
+   * and be implemented in the subclasses?
+   */
+  override def descendingByRetweet: TweetList = {
+    val mostRt = mostRetweeted
+    new Cons(mostRt, remove(mostRt).descendingByRetweet)
+  }
 }
 
 trait TweetList {
