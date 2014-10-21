@@ -61,6 +61,22 @@ class HuffmanSuite extends FunSuite {
     assert(makeOrderedLeafList(List(('t', 2), ('e', 1), ('x', 3))) === List(Leaf('e',1), Leaf('t',2), Leaf('x',3)))
   }
 
+  test("singleton of empty list is false") {
+    assert(!singleton(List()))
+  }
+
+  test("singleton of list of N is false") {
+    new TestTrees {
+      assert(!singleton(List(t1, t2)))
+    }
+  }
+
+  test("singleton of list of 1 is true") {
+    new TestTrees {
+      assert(singleton(List(t1)))
+    }
+  }
+
   ignore("combine of some leaf list") {
     val leaflist = List(Leaf('e', 1), Leaf('t', 2), Leaf('x', 4))
     assert(combine(leaflist) === List(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3), Leaf('x',4)))
