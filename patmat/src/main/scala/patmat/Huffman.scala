@@ -123,7 +123,17 @@ object Huffman {
    * If `trees` is a list of less than two elements, that list should be returned
    * unchanged.
    */
-  def combine(trees: List[CodeTree]): List[CodeTree] = ???
+  def combine(trees: List[CodeTree]): List[CodeTree] = {
+    def insert(x: CodeTree, trees: List[CodeTree]): List[CodeTree] = trees match {
+      case Nil => List(x)
+      case t :: ts => if (weight(x) <= weight(t)) x :: t :: ts else t :: insert(x, ts)
+    }
+
+    trees match {
+      case t1 :: t2 :: ts => insert(makeCodeTree(t1, t2), ts)
+      case x => x
+    }
+  }
 
   /**
    * This function will be called in the following way:
