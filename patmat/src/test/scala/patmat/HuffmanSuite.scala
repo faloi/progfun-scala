@@ -14,15 +14,34 @@ class HuffmanSuite extends FunSuite {
     val t2 = Fork(Fork(Leaf('a',2), Leaf('b',3), List('a','b'), 5), Leaf('d',4), List('a','b','d'), 9)
   }
 
+  test("weight of a leaf") {
+    assert(weight(Leaf('a', 8)) === 8)
+  }
+
   test("weight of a larger tree") {
     new TestTrees {
       assert(weight(t1) === 5)
     }
   }
 
+  test("chars of a leaf") {
+    assert(chars(Leaf('a', 8)) === List('a'))
+  }
+
   test("chars of a larger tree") {
     new TestTrees {
       assert(chars(t2) === List('a','b','d'))
+    }
+  }
+
+  test("makeCodeTree can create a CodeTree") {
+    new TestTrees {
+      val t2WithMake = makeCodeTree(
+        makeCodeTree(Leaf('a', 2), Leaf('b', 3)),
+        Leaf('d', 4)
+      )
+
+      assert(t2WithMake == t2)
     }
   }
 
