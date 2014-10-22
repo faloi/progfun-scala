@@ -200,14 +200,24 @@ object Huffman {
   def decodedSecret: List[Char] = decode(frenchCode, secret)
 
 
-
   // Part 4a: Encoding using Huffman tree
-
   /**
    * This function encodes `text` using the code tree `tree`
    * into a sequence of bits.
    */
-  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
+  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+    def encodeAux(codeTree: CodeTree, text: List[Char], result: List[Bit]): List[Bit] = text match {
+      case c :: cs => codeTree match {
+        case Leaf(_, _) => encodeAux(tree, cs, result)
+        case Fork(left, right, _, _) =>
+          if (chars(left).contains(c)) encodeAux(left, c :: cs, result :+ 0)
+          else encodeAux(right, c :: cs, result :+ 1)
+      }
+      case Nil => result
+    }
+
+    encodeAux(tree, text, Nil)
+  }
 
 
   // Part 4b: Encoding using code table

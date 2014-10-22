@@ -98,7 +98,7 @@ class HuffmanSuite extends FunSuite {
     assert(createCodeTree(string2Chars("babcaa")) === makeCodeTree(Leaf('a', 3), makeCodeTree(Leaf('c', 1), Leaf('b', 2))))
   }
 
-  test("decode makes a test from a bit array and a code tree") {
+  test("decode makes a text from a bit array and a code tree") {
     new TestTrees {
       assert(decode(t1, List(1, 0)) === "ba".toList)
     }
@@ -108,7 +108,13 @@ class HuffmanSuite extends FunSuite {
     assert(decodedSecret === "huffmanestcool".toList)
   }
 
-  ignore("decode and encode a very short text should be identity") {
+  test("encode makes a bit array from a text and a code tree") {
+    new TestTrees {
+      assert(encode(t1)("ba".toList) === List(1, 0))
+    }
+  }
+
+  test("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
     }
