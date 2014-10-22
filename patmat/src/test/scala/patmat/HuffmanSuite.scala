@@ -119,4 +119,15 @@ class HuffmanSuite extends FunSuite {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
     }
   }
+
+  test("codeBits returns a bitarray from a codeTable and a char") {
+    val table = List(('d', List(0)), ('b', List(1, 1)), ('a', List(1, 0)))
+    assert(codeBits(table)('b') === List(1, 1))
+  }
+
+  ignore("convert creates a CodeTable from a CodeTree") {
+    new TestTrees {
+      assert(convert(t2) == List(('d', List(0)), ('b', List(1, 1)), ('a', List(1, 0))))
+    }
+  }
 }
