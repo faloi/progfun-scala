@@ -1,7 +1,5 @@
 package patmat
 
-import common._
-
 /**
  * Assignment 4: Huffman coding
  *
@@ -152,7 +150,9 @@ object Huffman {
    *    the example invocation. Also define the return type of the `until` function.
    *  - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
    */
-  def until(xxx: ???, yyy: ???)(zzz: ???): ??? = ???
+  def until(predicate: List[CodeTree] => Boolean, reduce: List[CodeTree] => List[CodeTree])(trees: List[CodeTree]): List[CodeTree] =
+    if (predicate(trees)) trees
+    else until(predicate, reduce)(reduce(trees))
 
   /**
    * This function creates a code tree which is optimal to encode the text `chars`.
@@ -183,7 +183,7 @@ object Huffman {
 
   /**
    * What does the secret message say? Can you decode it?
-   * For the decoding use the `frenchCode' Huffman tree defined above.
+   * For the decoding use the 'frenchCode' Huffman tree defined above.
    */
   val secret: List[Bit] = List(0,0,1,1,1,0,1,0,1,1,1,0,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0,0,1,1,1,1,1,0,1,0,1,1,0,0,0,0,1,0,1,1,1,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,1)
 

@@ -87,6 +87,13 @@ class HuffmanSuite extends FunSuite {
     assert(combine(leaflist) === leaflist)
   }
 
+  test("until reduces a list of trees to a tree") {
+    assert(
+      until(singleton, _.tail)(List(Leaf('e', 1), Leaf('t', 2), Leaf('x', 4)))
+      === List(Leaf('x', 4))
+    )
+  }
+
   ignore("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
