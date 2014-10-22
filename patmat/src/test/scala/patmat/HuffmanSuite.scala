@@ -98,6 +98,12 @@ class HuffmanSuite extends FunSuite {
     assert(createCodeTree(string2Chars("babcaa")) === makeCodeTree(Leaf('a', 3), makeCodeTree(Leaf('c', 1), Leaf('b', 2))))
   }
 
+  test("decode makes a test from a bit array and a code tree") {
+    new TestTrees {
+      assert(decode(t1, List(1, 0)) === "ba".toList)
+    }
+  }
+
   ignore("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
