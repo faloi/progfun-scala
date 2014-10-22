@@ -130,4 +130,8 @@ class HuffmanSuite extends FunSuite {
       assert(convert(t2) == List(('a', List(0, 0)), ('b', List(0, 1)), ('d', List(1))))
     }
   }
+
+  test("decoded secret is really cool and quick!") {
+    assert(quickEncode(frenchCode)("huffmanestcool".toList) === secret)
+  }
 }
