@@ -53,6 +53,20 @@ class BloxorzSuite extends FunSuite {
     }
   }
 
+  test("Block: isStanding") {
+    new Level1 {
+      assert(Block(Pos(1,1), Pos(1,1)).isStanding, "Standing")
+      assert(!Block(Pos(1,2), Pos(1,3)).isStanding, "Not standing")
+    }
+  }
+
+  test("Block: isLegal") {
+    new Level1 {
+      assert(Block(Pos(1,1), Pos(1,1)).isLegal, "Start point is legal")
+      assert(!Block(Pos(3,9), Pos(3,10)).isLegal, "One cube outside the terrain is ilegal")
+    }
+  }
+
   ignore("optimal solution for level 1") {
     new Level1 {
       assert(solve(solution) == Block(goal, goal))
