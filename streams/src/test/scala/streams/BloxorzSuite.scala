@@ -67,6 +67,12 @@ class BloxorzSuite extends FunSuite {
     }
   }
 
+  test("GameDef: startBlock") {
+    new Level1 {
+      assert(startBlock === Block(Pos(1,1), Pos(1,1)))
+    }
+  }
+
   ignore("optimal solution for level 1") {
     new Level1 {
       assert(solve(solution) == Block(goal, goal))
