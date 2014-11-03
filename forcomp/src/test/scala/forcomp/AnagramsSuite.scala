@@ -106,12 +106,12 @@ class AnagramsSuite extends FunSuite {
     assert(combinations(aabbcc).toSet === aabbcccomb.toSet)
   }
 
-  ignore("sentence anagrams: []") {
+  test("sentence anagrams: []") {
     val sentence = List()
     assert(sentenceAnagrams(sentence) === List(Nil))
   }
 
-  ignore("sentence anagrams: Linux rulez") {
+  test("sentence anagrams: Linux rulez") {
     val sentence = List("Linux", "rulez")
     val anas = List(
       List("Rex", "Lin", "Zulu"),
@@ -138,4 +138,13 @@ class AnagramsSuite extends FunSuite {
     assert(sentenceAnagrams(sentence).toSet === anas.toSet)
   }
 
+  test("sentence anagrams: me") {
+    val sentence = List("me")
+    val anas = List(
+      List(),
+      List("me"),
+      List("em")
+    )
+    assert(sentenceAnagrams(sentence).toSet === anas.toSet)
+  }
 }
