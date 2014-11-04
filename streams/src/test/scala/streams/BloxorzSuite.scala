@@ -127,13 +127,13 @@ class BloxorzSuite extends FunSuite {
     }
   }
 
-  ignore("optimal solution for level 1") {
+  test("optimal solution for level 1") {
     new Level1 {
       assert(solve(solution) == Block(goal, goal))
     }
   }
 
-  ignore("optimal solution length for level 1") {
+  test("optimal solution length for level 1") {
     new Level1 {
       assert(solution.length == optsolution.length)
     }
