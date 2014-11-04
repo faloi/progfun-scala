@@ -54,7 +54,8 @@ trait StringParserTerrain extends GameDef {
    */
   def terrainFunction(levelVector: Vector[Vector[Char]]): Pos => Boolean = {
     case Pos(row, column) =>
-      if (levelVector.length <= row) false
+      if (row < 0 || column < 0) false
+      else if (levelVector.length <= row) false
       else {
         val levelRow = levelVector(row)
         if (levelRow.length <= column) false

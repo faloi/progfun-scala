@@ -1,7 +1,5 @@
 package streams
 
-import common._
-
 /**
  * This trait represents the layout and building blocks of the game
  *
@@ -130,17 +128,24 @@ trait GameDef {
                else                    dx(2, 1)
 
 
+    def move(direction: Move): Block = direction match {
+      case Left => left
+      case Right => right
+      case Up => up
+      case Down => down
+    }
+
     /**
      * Returns the list of blocks that can be obtained by moving
      * the current block, together with the corresponding move.
      */
-    def neighbors: List[(Block, Move)] = ???
+    def neighbors: List[(Block, Move)] = List(Left, Right, Up, Down).map(direction => (move(direction), direction))
 
     /**
      * Returns the list of positions reachable from the current block
      * which are inside the terrain.
      */
-    def legalNeighbors: List[(Block, Move)] = ???
+    def legalNeighbors: List[(Block, Move)] = neighbors.filter { case(block, _) => block.isLegal }
 
     /**
      * Returns `true` if the block is standing.
