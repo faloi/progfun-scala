@@ -93,6 +93,13 @@ class BloxorzSuite extends FunSuite {
     }
   }
 
+  test("Solver: can tell if the game is done") {
+    new Level1 {
+      assert(done(Block(goal, goal)), "when the block is at the goal, the game is done")
+      assert(!done(Block(goal, goal.dy(1))), "when the block is not at the goal, the game is not done")
+    }
+  }
+
   ignore("optimal solution for level 1") {
     new Level1 {
       assert(solve(solution) == Block(goal, goal))
